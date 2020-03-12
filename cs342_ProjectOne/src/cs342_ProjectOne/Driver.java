@@ -55,7 +55,27 @@ public class Driver {
 	
 	public void doStuff() {
 		
-		ChessBoard chessBoard = new ChessBoard( 8, 8);
+		LinkedStack queenStack = new LinkedStack();
+		
+		ChessBoard chessBoard = new ChessBoard(8, 8);
+		
+		Queen queen1 = new Queen(67, 2);
+		Queen queen2 = new Queen(35, 2);
+
+		
+		queenStack.push(queen1);
+		queenStack.push(queen2);
+		
+		//System.out.println(queenStack.peek());
+
+		
+		//queenStack.pop();
+
+
+		//System.out.println(queenStack.readStack(0));
+
+		System.out.println(queenStack);
+		
 		
 		
 		
