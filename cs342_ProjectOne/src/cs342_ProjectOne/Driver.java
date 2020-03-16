@@ -61,47 +61,78 @@ public class Driver {
 		
 		boolean isSuccess = false;
 		
-		int counter = 0;
 		
-		while(counter < 9||!queenStack.isEmpty()) {
-			if(counter > 8){
-				break;
-			}else {
-				counter++;
-			}
+		int incrementorJ = 0;
+		int incrementorI = 0;
+		
+		while((!isSuccess || !queenStack.isEmpty()) && incrementorI < 7) {
 			
-			for(int i = 0; i < chessBoard.getMAX_ROW(); i++) {
-				for(int j = 0; j < chessBoard.getMAX_COLUMN(); j++) {
-					Queen queen = new Queen(i, j);
-					queenStack.push(queen);
+			int counter = 0;
+			while(counter < 9) {
+				
+				counter++;
+
+				for(int i = 0; i < chessBoard.getMAX_ROW(); i++) {
 					
-					isSuccess = !chessBoard.isConflictStack(queenStack);//success if there are no conflicts in the stack
-					
-					System.out.println("isSuccess?: " + isSuccess);
-					System.out.println("Counter: " + counter);
-					System.out.println("I is: " + i + " and J is: " + j);
+					for(int j = 0; j < chessBoard.getMAX_COLUMN(); j++) {
+						Queen queen;
+						
+						if(counter == 1) {
 
-					System.out.println(queenStack);
-					System.out.println(counter);
+							queen = new Queen(i + incrementorI, j + incrementorJ);
 
-					chessBoard.printChessBoard(queenStack);
+						}else {
+							queen = new Queen(i , j);
+						}
+						
+						
+						queenStack.push(queen);
+						
+						isSuccess = !chessBoard.isConflictStack(queenStack);//success if there are no conflicts in the stack
+						
+						System.out.println("Incrementor J: " + incrementorJ);
+						System.out.println("Incrementor I: " + incrementorJ);
+
+						System.out.println("isSuccess?: " + isSuccess);
+						System.out.println("Counter: " + counter);
+						System.out.println("I is: " + i + " and J is: " + j);
+
+						System.out.println(queenStack);
+						System.out.println(counter);
+
+						chessBoard.printChessBoard(queenStack);
 
 
-					if(isSuccess == false) {
-						queenStack.pop();// if there is no success then pop the last added queen to remove the conflict
-					}else {
+						if(isSuccess == false) {
+							queenStack.pop();// if there is no success then pop the last added queen to remove the conflict
+						}else {
+							break;
+						}
+
+					}
+					if(isSuccess == true) {
 						break;
 					}
+					
 
-				}
-				if(isSuccess == true) {
-					break;
 				}
 				
+			}
+			if(isSuccess == false) {
+				queenStack.clear();
 
 			}
+			incrementorJ += 1;
+			if(incrementorJ > 7) {
+				incrementorI += 1;
+				incrementorJ = 0;
+			}
+
+			
+			
 			
 		}
+
 		
 		//Queen queen1 = new Queen(1, 2);
 		//Queen queen2 = new Queen(5, 6);
