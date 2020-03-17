@@ -89,7 +89,8 @@ public class Driver {
 /// placeQueens ///
 /// Input : LinkedStack, ChessBoard, column ///
 /// Output: true or false///
-/// Uses recursion and backtracking to solve the queens problem.///
+/// Uses recursion and backtracking to solve the queens problem.
+///	Adds queens on a column by column bases and adjusts row if there are conflicts
 /// 
 /// ///
 ///////////////////////////////////////////////////////////////////
