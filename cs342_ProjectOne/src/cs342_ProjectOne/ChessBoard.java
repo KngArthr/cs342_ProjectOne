@@ -50,7 +50,7 @@ public class ChessBoard {
 		
 		Queen queen1;//two variables to compare 1 queen with all other queens in the stack
 		Queen queen2;//for the first iteration, queen 1 will stay the same while queen 2 will cycle through the stack
-		//next iteration will move to next queen in stack, and queen 2 will cycle again through the stack
+		//next iteration will move to next queen in stack, and queen 2 will cycke through stack
 		for(int i = 0; i < queenStack.size(); i++) {//queen1 will be what the other queens are compared against
 			queen1 = queenStack.readStack(i);//i is the queen that is compared against
 			
@@ -155,7 +155,10 @@ public class ChessBoard {
 					}else if(k == queenStack.size()-1) {
 						System.out.print(" ");
 					}
-					
+				}
+				if(queenStack.isEmpty()) {
+					System.out.print(" ");
+
 				}
 				System.out.print(" ");
 				System.out.print("|");

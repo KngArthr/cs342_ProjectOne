@@ -39,10 +39,76 @@ public class Driver {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Driver driver = new Driver();
+
 		
-		driver.doStuff();
+		//driver.doStuff();
+		driver.doStuff2();
+
 
 	}
+	
+	public void doStuff2() {
+		
+		LinkedStack queenStack = new LinkedStack();
+		ChessBoard chessBoard = new ChessBoard(8, 8);
+		
+		boolean isSuccess = false;
+		
+		
+		System.out.println(queenStack);
+		//chessboard.printChessBoard(queenStack);
+		
+		if((solveQueen(queenStack, chessBoard, 0)) == false) {
+			System.out.println("Not Possible");
+		}else {
+			chessBoard.printChessBoard(queenStack);
+			
+		}
+		
+
+		
+		
+
+		
+	}
+	
+	boolean solveQueen(LinkedStack queenStack, ChessBoard chessBoard, int column) {
+		
+		if(column >= 8) {
+			return true;
+		}
+		
+		for(int i = 0; i < 8; i++) {
+			
+			Queen queen = new Queen(i, column);
+			
+			queenStack.push(queen);
+			
+			System.out.println(queenStack);
+			chessBoard.printChessBoard(queenStack);
+
+			
+			if(!chessBoard.isConflictStack(queenStack)) {
+				column++;
+
+			
+			}else{
+				queenStack.pop();
+			}
+				
+				
+				
+			}
+			
+	
+		
+		return false;
+	}
+	
+
+	
+	
+
 	
 ///////////////////////////////////////////////////////////////////
 /// doStuff ///
@@ -65,7 +131,7 @@ public class Driver {
 		int incrementorJ = 0;
 		int incrementorI = 0;
 		
-		while((!isSuccess || !queenStack.isEmpty()) && incrementorI < 7) {
+		while((!isSuccess || !queenStack.isEmpty())) {
 			
 			int counter = 0;
 			while(counter < 9) {
@@ -127,6 +193,10 @@ public class Driver {
 				incrementorI += 1;
 				incrementorJ = 0;
 			}
+			
+			if(incrementorI > 7) {
+				break;
+			}
 
 			
 			
@@ -159,5 +229,7 @@ public class Driver {
 		
 		
 	}
+	
+
 
 }
