@@ -25,19 +25,7 @@ public class ChessBoard {
 		this.MAX_ROW = max_row;
 		this.MAX_COLUMN = max_column;
 	}
-///////////////////////////////////////////////////////////////////
-/// General getters and setters ///
-///
-/// General Getters and setters for max row and max column attributes///
-/// ///
-///////////////////////////////////////////////////////////////////
-	public int getMAX_ROW() {
-		return MAX_ROW;
-	}
 
-	public int getMAX_COLUMN() {
-		return MAX_COLUMN;
-	}
 ///////////////////////////////////////////////////////////////////
 /// isConflictStack///
 /// Input : stack///
@@ -80,7 +68,7 @@ public class ChessBoard {
 /// ///
 ///////////////////////////////////////////////////////////////////
 	public boolean isConflictHorVer(Queen queen1, Queen queen2) {
-		if((queen1.getRow()==queen2.getRow())||(queen1.getColumn()==queen2.getColumn())) {
+		if((queen1.getRow()==queen2.getRow())||(queen1.getColumn()==queen2.getColumn())) {//if rows or columns of the two queens are equivalent, they conflict.
 			return true;
 		}
 		
@@ -91,36 +79,52 @@ public class ChessBoard {
 /// Input : two queens///
 /// Output: true or false ///
 /// returns true or false based on if queen 1 conflicts with queen2
-/// diagonally
+/// diagonally. Method scans through diagonals of board to find conflict
 /// ///
 ///////////////////////////////////////////////////////////////////
 	public boolean isConflictDiagonal(Queen queen1, Queen queen2) {
 		
-		int counter = 0;
+		int modifier = 0;
 		
-		while(counter < 8) {
-			counter++;
+		while(modifier < 8) {
+			modifier++;
 			
-			if(queen1.getRow() + counter > -1 && queen1.getRow() + counter < getMAX_ROW() && queen1.getColumn() + counter > -1 && queen1.getColumn() + counter < getMAX_COLUMN()) {
-				if(queen1.getRow() + counter == queen2.getRow() && queen1.getColumn() + counter == queen2.getColumn()){
+			
+			//
+			//As we move through the loop, the diagonals will be scanned based on the coordinates
+			//of the queens on the stack. The modifier attribute will be used to move through the diagonals in relation to the queen.
+			//
+			//
+			//
+			//
+			//Scanning down and right
+			// increment row, increment column
+			if(queen1.getRow() + modifier > -1 && queen1.getRow() + modifier < getMAX_ROW() && queen1.getColumn() + modifier > -1 && queen1.getColumn() + modifier < getMAX_COLUMN()) {//if the queen +/- modifier is within the limits of the chessboard
+				if(queen1.getRow() + modifier == queen2.getRow() && queen1.getColumn() + modifier == queen2.getColumn()){//and if the queen's diagonals conflict with the second queen's coordinates, return true for conflict
 					return true;
 				}
 
 			}
-			if(queen1.getRow() - counter > -1 && queen1.getRow() - counter < getMAX_ROW() && queen1.getColumn() - counter > -1 && queen1.getColumn() - counter < getMAX_COLUMN()) {
-				if(queen1.getRow() - counter == queen2.getRow() && queen1.getColumn() - counter == queen2.getColumn()){
+			//Scanning up and left
+			// decrement row, decrement colummn
+			if(queen1.getRow() - modifier > -1 && queen1.getRow() - modifier < getMAX_ROW() && queen1.getColumn() - modifier > -1 && queen1.getColumn() - modifier < getMAX_COLUMN()) {//if the queen +/- modifier is within the limits of the chessboard
+				if(queen1.getRow() - modifier == queen2.getRow() && queen1.getColumn() - modifier == queen2.getColumn()){//and if the queen's diagonals conflict with the second queen's coordinates, return true for conflict
 					return true;
 				}
 
 			}
-			if(queen1.getRow() + counter > -1 && queen1.getRow() + counter < getMAX_ROW() && queen1.getColumn() - counter > -1 && queen1.getColumn() - counter < getMAX_COLUMN()) {
-				if(queen1.getRow() + counter == queen2.getRow() && queen1.getColumn() - counter == queen2.getColumn()){
+			//Scanning down and left
+			// increment row, decrement column
+			if(queen1.getRow() + modifier > -1 && queen1.getRow() + modifier < getMAX_ROW() && queen1.getColumn() - modifier > -1 && queen1.getColumn() - modifier < getMAX_COLUMN()) {//if the queen +/- modifier is within the limits of the chessboard
+				if(queen1.getRow() + modifier == queen2.getRow() && queen1.getColumn() - modifier == queen2.getColumn()){//and if the queen's diagonals conflict with the second queen's coordinates, return true for conflict
 					return true;
 				}
 
 			}
-			if(queen1.getRow() - counter > -1 && queen1.getRow() - counter < getMAX_ROW() && queen1.getColumn() + counter > -1 && queen1.getColumn() + counter < getMAX_COLUMN()) {
-				if(queen1.getRow() - counter == queen2.getRow() && queen1.getColumn() + counter == queen2.getColumn()){
+			//Scanning up and right
+			// decrement row, increment column
+			if(queen1.getRow() - modifier > -1 && queen1.getRow() - modifier < getMAX_ROW() && queen1.getColumn() + modifier > -1 && queen1.getColumn() + modifier < getMAX_COLUMN()) {//if the queen +/- modifier is within the limits of the chessboard
+				if(queen1.getRow() - modifier == queen2.getRow() && queen1.getColumn() + modifier == queen2.getColumn()){//and if the queen's diagonals conflict with the second queen's coordinates, return true for conflict
 					return true;
 				}
 
@@ -130,50 +134,87 @@ public class ChessBoard {
 		}
 		
 		
-		return false;
+		return false;//if no conflicts are found then return false
 	}
 
 ///////////////////////////////////////////////////////////////////
 /// printChessBoard///
 /// Input : stack///
 /// Output: printed chessboard with queens from stack ///
-/// peints a chessboard to the console with Queens from stack
+/// Prints a chessboard to the console with Queens from stack.
 /// ///
 ///////////////////////////////////////////////////////////////////
 	
 	public void printChessBoard(LinkedStack queenStack) {
-		System.out.print("+---+---+---+---+---+---+---+---+\n");
 		
-		for(int i = 0; i < getMAX_ROW(); i++) {
+		for(int i = 0; i < getMAX_COLUMN(); i++ ) {//top line generated based on number of columns
+			System.out.print("+---");
+
+		}
+		System.out.print("+\n");
+
+		//System.out.print("+---+---+---+---+---+---+---+---+\n");
+		
+		for(int i = 0; i < getMAX_ROW(); i++) {//for the amount of rows in the chessboard, do the following...
+			
 			System.out.print("|");
-			for(int j = 0; j < getMAX_COLUMN(); j++) {
+			
+			for(int j = 0; j < getMAX_COLUMN(); j++) {//for the specific row (i) and amount of columns in the chessboard, do the following...
+				
 				System.out.print(" ");
-				for(int k = 0; k < queenStack.size(); k++) {
-					if((queenStack.readStack(k).getRow()==i) && queenStack.readStack(k).getColumn() == j) {
+				
+				for(int k = 0; k < queenStack.size(); k++) {//for the specific i,j coordinates, and amount of queens in the stack, cycle through the stack and see if i,j matches with any queen's coordinates
+					
+					if((queenStack.readStack(k).getRow()==i) && queenStack.readStack(k).getColumn() == j) {//if i and j are at the queen's coordinates print a "Q" to mark the queen
+						
 						System.out.print("Q");
 						break;
-					}else if(k == queenStack.size()-1) {
+						//break the loop if a queen is placed for the coordinate because no other queen should be in the same coordinates
+						
+					}else if(k == queenStack.size()-1) {//if no matching coordinates are found, just print a space
 						System.out.print(" ");
 					}
 				}
-				if(queenStack.isEmpty()) {
+				
+				if(queenStack.isEmpty()) {//if the queenstack is empty, print out a space
 					System.out.print(" ");
 
 				}
+				
 				System.out.print(" ");
 				System.out.print("|");
-				if(j == getMAX_COLUMN()-1) {
+				
+				if(j == getMAX_COLUMN()-1) {//if the max column is reached, start a new line/row
 					System.out.print("\n");
 
 				}
 
 
 			}
-			System.out.print("+---+---+---+---+---+---+---+---+\n");
+			for(int l = 0; l < getMAX_COLUMN(); l++ ) {
+				System.out.print("+---");//bottom line generated based on number of columns
+
+			}
+			System.out.print("+\n");//start new line
+
+			//System.out.print("+---+---+---+---+---+---+---+---+\n");
 			
 			
 		}
 		
+	}
+	///////////////////////////////////////////////////////////////////
+	/// General getters and setters ///
+	///
+	/// General Getters and setters for max row and max column attributes///
+	/// ///
+	///////////////////////////////////////////////////////////////////
+	public int getMAX_ROW() {
+	return MAX_ROW;
+	}
+	
+	public int getMAX_COLUMN() {
+	return MAX_COLUMN;
 	}
 
 }

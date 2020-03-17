@@ -8,14 +8,13 @@ package cs342_ProjectOne;
 
 public class Node {
 	
-	private Queen data;
-	private Node next;
-	
+	private Queen data;//stores data as a Queen object
+	private Node next;//reference to next data object
 	
 ///////////////////////////////////////////////////////////////////
 /// General getters and setters ///
 ///
-/// General Getters and setters for data next attributes///
+/// General Getters and setters for data and next attributes///
 /// ///
 ///////////////////////////////////////////////////////////////////
 	public Queen getData() {

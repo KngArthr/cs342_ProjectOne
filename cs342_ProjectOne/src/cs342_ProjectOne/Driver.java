@@ -13,8 +13,13 @@
 //with no possibility of capturing each other.
 //
 //Assumptions:
-//The board will be empty and exactly 8 queens will be required.
-//to fit on the board at once.
+//The board will be empty and exactly 8 queens will be required
+//to fit on the board at once without being able to attack each other.
+//
+//Notes:
+//The doStuff method in the Driver class is for reference only.
+//I have scrapped that algorithm for a better one in 
+//placeQueens and solveIt.
 
 package cs342_ProjectOne;
 
@@ -22,16 +27,17 @@ package cs342_ProjectOne;
 //Class: Driver
 //
 //Description:
-//Main Class where other classes and methods are used
-//
+//Main Class where other classes and methods are used to put the program together.
+//The class that drives this program.
 
 public class Driver {
 	
 ///////////////////////////////////////////////////////////////////
 /// main ///
 /// Input : String[] args ///
-/// Output: print results///
-/// Puts program together ///
+/// Output: None///
+/// Runs the program. Key methods are placed in to the main method to run the program.
+/// Will print results into the console.
 /// ///
 ///////////////////////////////////////////////////////////////////
 
@@ -40,76 +46,94 @@ public class Driver {
 		// TODO Auto-generated method stub
 		Driver driver = new Driver();
 
-		
-		//driver.doStuff();
-		driver.doStuff2();
+		driver.solveIt();
 
 
 	}
+///////////////////////////////////////////////////////////////////
+/// solveIt ///
+/// Input : None///
+/// Output: None///
+/// Runs the program. Key methods are placed in to the main method to run the program. ///
+/// ///
+///////////////////////////////////////////////////////////////////
 	
-	public void doStuff2() {
+	public void solveIt() {
 		
 		LinkedStack queenStack = new LinkedStack();
+		
+		//create chessboard with 8 rows and 8 columns
+		//program is created with the assumption that the chessboard is 8x8
 		ChessBoard chessBoard = new ChessBoard(8, 8);
-		
-		boolean isSuccess = false;
-		
+				
 		
 		//System.out.println(queenStack);
 		//chessboard.printChessBoard(queenStack);
 		
-		if((solveQueen(queenStack, chessBoard, 0)) == false) {
+		if((placeQueens(queenStack, chessBoard, 0)) == false) {
+			//if queens are not able to placed on board, return the following statement.
 			System.out.println("Not Possible");
+			
 		}else {
+			//if all queens are non-conflicting then display the data
+			//as both a stack and on a chessboard.
 			System.out.println("Final Solution:");
 			chessBoard.printChessBoard(queenStack);
+			System.out.println(queenStack);
+
 			
 		}
 		
-
-		
-		
-
-		
 	}
+///////////////////////////////////////////////////////////////////
+/// placeQueens ///
+/// Input : LinkedStack, ChessBoard, column ///
+/// Output: true or false///
+/// Uses recursion and backtracking to solve the queens problem.///
+/// 
+/// ///
+///////////////////////////////////////////////////////////////////
 	
-	boolean solveQueen(LinkedStack queenStack, ChessBoard chessBoard, int column) {
+	boolean placeQueens(LinkedStack queenStack, ChessBoard chessBoard, int column) {
+		///**ChessBoard included for testing purposes
 		
-		//base case, so it does not run infinitely
-		if(column >= 8) {
+		//base case, so it does not run infinitely. When does it need to stop?
+		if(column >= chessBoard.getMAX_COLUMN()) {//when 8 queens are placed on the 8 column board.
 			return true;
 		}
 		
 		//cycle through rows
-		for(int i = 0; i < 8; i++) {
+		for(int i = 0; i < chessBoard.getMAX_ROW(); i++) {
 			
-			Queen queen = new Queen(i, column);
+			Queen queen = new Queen(i, column);//create the queen for that column
 			
-			queenStack.push(queen);
+			queenStack.push(queen);//push it to the stack
 			
+			
+			///**Testing purposes
 			//System.out.println(queenStack);
 			//chessBoard.printChessBoard(queenStack);
 
 			
 			if(!chessBoard.isConflictStack(queenStack)) {
-				//keep the queen
+				//If there is no conflict with the queens in the stack, keep the queen
 				
-				if(solveQueen(queenStack, chessBoard, column + 1)) {
+				if(placeQueens(queenStack, chessBoard, column + 1)) {
+					//function will recur for next column. If it is able to place a queen
+					//in the next column then it will return true.
 					return true;
 				}
 				
-				//queenStack.pop();
-
-				
 			
 			}
-				
+			
+			//if queen is not able to be placed, then queen is removed.
 			queenStack.pop();
 
 				
 		}
 			
-	
+		//if queens cannot be placed, return false.
 		return false;
 	}
 	
@@ -119,10 +143,16 @@ public class Driver {
 
 	
 ///////////////////////////////////////////////////////////////////
+	
+///*****THIS METHOD IS FOR REFERENCE ONLY.******	
+///******THIS METHOD WILL NOT BE USED IN THE PROGRAM.******	
+	
 /// doStuff ///
 /// Input : None///
 /// Output: None///
-/// Does all the stuff. Methods and classes will be used here///
+/// I attempted an algorithm where I check the squares 1 by 1 but failed. It got too complicated for me///
+/// which is why I resorted to recursion which is simpler, and cleaner.
+///
 /// ///
 ///////////////////////////////////////////////////////////////////
 	

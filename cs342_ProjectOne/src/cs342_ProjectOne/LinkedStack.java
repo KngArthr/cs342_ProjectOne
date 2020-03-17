@@ -8,8 +8,8 @@ package cs342_ProjectOne;
 
 public class LinkedStack implements MyStack {
 	
-	private Node top;
-	private int size;
+	private Node top;//reference to the top of the stack
+	private int size;//size of the stack
 	
 ///////////////////////////////////////////////////////////////////
 /// LinkedStack ///
@@ -21,7 +21,7 @@ public class LinkedStack implements MyStack {
 	
 	
 	public LinkedStack() {
-		top = null;
+		top = null;//initialize empty LinkedList stack
 		size = 0;
 	}
 	
@@ -37,13 +37,13 @@ public class LinkedStack implements MyStack {
 	public boolean push(Queen data) {
 		// TODO Auto-generated method stub
 		
-		Node newNode = new Node();
+		Node newNode = new Node();//creates new node
 		
-		newNode.setData(data);
-		newNode.setNext(top);
+		newNode.setData(data);//new node is given data that we want to add to the stack
+		newNode.setNext(top);//new node next reference points to the top node of the stack
 		
-		top = newNode;
-		size++;
+		top = newNode;//top node gets new data.
+		size++;//size attribute is incremented
 		
 		return true;
 	}
@@ -60,17 +60,17 @@ public class LinkedStack implements MyStack {
 	public Queen pop() {
 		// TODO Auto-generated method stub
 		
-		if(isEmpty()) {
+		if(isEmpty()) {//if the stack is empty then return null
 			return null;
 		}
 		
-		Node rtn = top;
+		Node rtn = top;//new node gets top node
 		
-		top = top.getNext();
+		top = top.getNext();//top node gets the next node. The node one down from the top
 		
-		size--;
+		size--;//subtract from size attribute as the top-most node has been removed
 		
-		return rtn.getData();
+		return rtn.getData();//return what has been removed
 	}
 
 ///////////////////////////////////////////////////////////////////
@@ -81,8 +81,8 @@ public class LinkedStack implements MyStack {
 /// ///
 ///////////////////////////////////////////////////////////////////
 	public void clear() {
-		size = 0;
-		top = null;
+		size = 0;//reset size attribute
+		top = null;//reset top reference to null. This will completely clear the whole stack
 	}
 	
 ///////////////////////////////////////////////////////////////////
@@ -97,28 +97,30 @@ public class LinkedStack implements MyStack {
 	public Queen readStack(int slot) {
 		// TODO Auto-generated method stub
 		
-		Queen rtn = null;
+		Queen queen = null;//new empty queen object is created
 		
 		if(isEmpty()) {
-			System.out.println("Empty Stack");
+			System.out.println("Empty Stack");//if the stack is empty then return null along with empty stack message
 			return null;
 		}
 		
-		Node n = top;
 		
-		int counter = -1;
+		Node node = top;//node gets the top object
 		
-		while(counter < slot) {
-			if(n == null) {
+		int counter = -1;//the counter starts at -1
+		
+		
+		while(counter < slot) {//while the slot has not yet been reached
+			if(node == null) {//if the end of the stack is hit, then return null and display message
 				System.out.println("Stack out of bounds");
 				return null;
 			}
-			rtn = n.getData();
-			n = n.getNext();
-			counter++;
+			queen = node.getData();//queen gets the data in the current node
+			node = node.getNext();//node gets data from next node
+			counter++;//increment counter
 		}
 		
-		return rtn;
+		return queen;//return a queen object
 	}
 
 	
@@ -135,7 +137,7 @@ public class LinkedStack implements MyStack {
 	@Override
 	public Boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return (size == 0);
+		return (size == 0);//if the size is 0 return true else return false.
 	}
 	
 ///////////////////////////////////////////////////////////////////
@@ -149,11 +151,11 @@ public class LinkedStack implements MyStack {
 	@Override
 	public Queen peek() {
 		// TODO Auto-generated method stub
-		if (isEmpty()) {
+		if (isEmpty()) {//if stack is empty, return null
 			return null;
 		}
 		
-		return top.getData();
+		return top.getData();//else return the top node in the stack
 	}
 ///////////////////////////////////////////////////////////////////
 /// size ///
@@ -167,41 +169,43 @@ public class LinkedStack implements MyStack {
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return size;
+		return size;//return the size of the stack
 	}
 ///////////////////////////////////////////////////////////////////
 /// toString ///
 /// Input : None///
 /// Output: String///
-/// Tailors output to my liking
+/// Tailors string output to my liking
 /// ///
 ///////////////////////////////////////////////////////////////////
 	
 	public String toString() {
 		String rtn ="";
 		
-		if(isEmpty()) {
+		if(isEmpty()) {//if the stack is empty return an empty message
 			return "<Empty>";
 		}
 		
-		Node n = top;
+		Node node = top;//node gets the top node
+		
 		int counter = 0;
-		while(n != null) {
-			if(n == top) {
+		
+		while(node != null) {//while we don't hit the end of the stack
+			if(node == top) {//if the node is the top node, add the following String
 				rtn += "top -> ";
 			}else {
-				rtn += "       ";
+				rtn += "       ";//otherwise ad space to line it up
 			}
 
-			rtn += ("Stack Slot " + counter + ": " + n.getData().getRow()+ ", " + n.getData().getColumn() + "\n");
+			rtn += ("Stack Slot " + counter + ": " + node.getData().getRow()+ ", " + node.getData().getColumn() + "\n");//adds slot number of stack plus the row and column of queen
 
 				
 			//rtn += n.getData();
-			n = n.getNext();
-			counter++;
+			node = node.getNext();//move on to the next node
+			counter++;//increment counter
 		}
 		
-		return rtn;
+		return rtn;//return the string
 
 		
 	}

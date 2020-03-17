@@ -38,7 +38,8 @@ public class Queen {
 ///////////////////////////////////////////////////////////////////
 	
 	
-	public void setRowColumn(int row, int column){
+	//set both row and column for queen
+	public void setRowColumn(int row, int column) {
 		this.row = row;
 		this.column = column;
 	}
