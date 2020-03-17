@@ -55,12 +55,13 @@ public class Driver {
 		boolean isSuccess = false;
 		
 		
-		System.out.println(queenStack);
+		//System.out.println(queenStack);
 		//chessboard.printChessBoard(queenStack);
 		
 		if((solveQueen(queenStack, chessBoard, 0)) == false) {
 			System.out.println("Not Possible");
 		}else {
+			System.out.println("Final Solution:");
 			chessBoard.printChessBoard(queenStack);
 			
 		}
@@ -74,34 +75,41 @@ public class Driver {
 	
 	boolean solveQueen(LinkedStack queenStack, ChessBoard chessBoard, int column) {
 		
+		//base case, so it does not run infinitely
 		if(column >= 8) {
 			return true;
 		}
 		
+		//cycle through rows
 		for(int i = 0; i < 8; i++) {
 			
 			Queen queen = new Queen(i, column);
 			
 			queenStack.push(queen);
 			
-			System.out.println(queenStack);
-			chessBoard.printChessBoard(queenStack);
+			//System.out.println(queenStack);
+			//chessBoard.printChessBoard(queenStack);
 
 			
 			if(!chessBoard.isConflictStack(queenStack)) {
-				column++;
+				//keep the queen
+				
+				if(solveQueen(queenStack, chessBoard, column + 1)) {
+					return true;
+				}
+				
+				//queenStack.pop();
 
+				
 			
-			}else{
-				queenStack.pop();
 			}
 				
+			queenStack.pop();
+
 				
-				
-			}
+		}
 			
 	
-		
 		return false;
 	}
 	
